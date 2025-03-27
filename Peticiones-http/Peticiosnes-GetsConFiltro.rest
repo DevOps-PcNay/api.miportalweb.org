@@ -1,0 +1,29 @@
+
+### Peticion GET con Campos personalizados, Base de Datos 2
+GET https://api.miportalweb.org/t_products?select=id_product,name_product
+
+
+#### Peticion GET con campos personalizados usando otra base de datos 2, usando la clausula WHERE. Solo se filtra por un solo valor y se muestran dos campos de l tabla  
+GET https://api.miportalweb.org/t_courses?select=id_course,title_course&linkTo=title_course&equalTo=Gussi,ghost
+
+#### Peticion GET con campos personalizados usando otra base de datos 1, usando la clausula WHERE.  
+GET https://api.miportalweb.org/t_courses?select=id_course,title_course&linkTo=id_instructor_course&equalTo=2
+
+
+### 
+GET https://api.miportalweb.org/t_courses?select=id_course,title_course&linkTo=title_course&equalTo=Gussi,ghost
+
+###
+// Peticion GET con multiples condiciones, 1 AND
+GET https://api.miportalweb.org/t_courses?select=id_course,title_course,description_course,id_instructor_course&linkTo=title_course,id_instructor_course&equalTo=Gussi,ghost_3
+
+
+###
+// Peticion GET con multiples condiciones, 2 AND
+GET https://api.miportalweb.org/t_courses?select=id_course,title_course,description_course&linkTo=title_course,id_instructor_course,id_course&equalTo=Gussi,ghost_2_1
+
+
+### Ordenar los registros
+# Peticion GET con campos personalizados usando otra base de datos 2, usando la clausula WHERE. Solo se filtra por un solo valor y se muestran tres campos de l tabla, ordenados por "description_course" de forma Descendente
+GET https://api.miportalweb.org/t_courses?select=id_course,title_course,description_course&linkTo=title_course&equalTo=Gussi,ghost&orderBy=description_course&orderMode=DESC
+

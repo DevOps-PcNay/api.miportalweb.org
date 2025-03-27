@@ -1,0 +1,13 @@
+
+
+### 
+PUT https://api.miportalweb.org/t_Users
+
+###
+DELETE https://api.miportalweb.org/t_Users
+
+###
+POST https://api.miportalweb.org/t_Users
+
+
+

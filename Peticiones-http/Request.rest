@@ -1,0 +1,34 @@
+
+@api = https://jsonplaceholder.typicode.com
+
+
+
+GET {{api}}/posts
+
+# = Para escribir comentarios
+// = Para escribir comentarios
+###  = Para separar cada peticion http.›
+
+###
+POST https://jsonplaceholder.typicode.com/posts 
+Content-Type: application/json
+
+{
+  "title":"Usando la extencion Rest Client",
+  "body" : "Es facil de usuar !!! "
+}
+
+### Para Borrar un registro 
+DELETE https://jsonplaceholder.typicode.com/posts/101
+
+# Se ejecuta de nuevo la peticion "GET" para que muestra de nuevo los datos para seleccionar un registro para actualizar.
+# el registro sera : id: 3
+
+### Es importante que se coloque estes tres simbolos para que se separa la instruccion anterior y despliega el linkg de "Send Request"
+PUT https://jsonplaceholder.typicode.com/posts/4
+Content-Type: application/json
+
+{
+  "title":"Se modificara el contenido de id 4",
+  "body":"Se agrega texto nuevo a este id cuyo numero es 4"
+}

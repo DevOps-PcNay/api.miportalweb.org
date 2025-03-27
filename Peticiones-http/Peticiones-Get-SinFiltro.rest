@@ -1,0 +1,16 @@
+### Primera peticion de la API
+GET https://api.miportalweb.org/t_instructors?select=*
+
+### Otra peticion "Get" de otra Tabla.
+GET https://api.miportalweb.org/t_courses
+
+### Otra peticion "Get" con solo se obtiene una columna de la tabla
+GET https://api.miportalweb.org/t_courses?select=id_course
+
+
+### Ordenar Registros.
+# Muestra todos lo registros Ordenados Ascendentemente por id_course
+GET https://api.miportalweb.org/t_courses?select=*&orderBy=id_course&orderMode=ASC
+
+### Muestra todos lo registros Ordenados Ascendentemente por "title_course"
+GET https://api.miportalweb.org/t_courses?select=*&orderBy=title_course&orderMode=ASC
