@@ -20,6 +20,9 @@
   $orderBy = $_GET["orderBy"] ?? null;    // Si no viene el valor $_GET["orderBy"] le asigna un "null"
   $orderMode = $_GET["orderMode"] ?? null;    // Si no viene el valor $_GET["orderMode"] le asigna un "null"
 
+  // Para limitar los registros a mostrar 
+  $startAt = $_GET["startAt"] ?? null;    // Si no viene el valor $_GET["startAt"] le asigna un null
+  $endAt = $_GET["endAt"] ?? null;    // Si no viene el valor $_GET["endAt"] le asigna un null
 
   // Se verificara si viene una variable super global de tipo GET con el parametro "select"
   // Si no se manda esta variable "select", tomara el valor de "*"
@@ -55,7 +58,7 @@
   // Verificando si viene una variable super global "linkTo"
   
   if (isset($_GET["linkTo"]) && isset($_GET["equalTo"])){
-    $response->getDataFilter($table,$select,$_GET["linkTo"],$_GET["equalTo"],$orderBy,$orderMode);
+    $response->getDataFilter($table,$select,$_GET["linkTo"],$_GET["equalTo"],$orderBy,$orderMode,$startAt,$endAt);
   } // if (isset($_GET["linkTo"]) && isset($_GET["equalTo"])){
   else
   {
@@ -63,7 +66,7 @@
     // Peticiones Get SIN filtro
     // ===============================================
     //$select = "*";
-    $response->getData($table,$select,$orderBy,$orderMode);
+    $response->getData($table,$select,$orderBy,$orderMode,$startAt,$endAt);
   }
 
 

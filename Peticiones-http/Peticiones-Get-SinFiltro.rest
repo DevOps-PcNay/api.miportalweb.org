@@ -14,3 +14,11 @@ GET https://api.miportalweb.org/t_courses?select=*&orderBy=id_course&orderMode=A
 
 ### Muestra todos lo registros Ordenados Ascendentemente por "title_course"
 GET https://api.miportalweb.org/t_courses?select=*&orderBy=title_course&orderMode=ASC
+
+
+### Limitar los registros. Se agregan dos parametros. "startAt", "endAt"
+GET https://api.miportalweb.org/t_courses?select=*&startAt=0&endAt=5
+
+### Ordenar Registros y se limitan registros
+# Muestra todos lo registros Ordenados Ascendentemente por id_course
+GET https://api.miportalweb.org/t_courses?select=*&startAt=0&endAt=5&orderBy=id_course&orderMode=DESC

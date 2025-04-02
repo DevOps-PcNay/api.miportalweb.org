@@ -10,10 +10,10 @@
 
     // Obteniendo informacion del modelo
     // "static" porque retornara un valor  
-    static public function getData($table,$select,$orderBy,$orderMode)
+    static public function getData($table,$select,$orderBy,$orderMode,$startAt,$endAt)
     {
       // Se instancia la clase GetModel, para usa el metodo "getData" 
-      $response = GetModel::getData($table,$select,$orderBy,$orderMode); // Se ejecutara el metodo "getData", por esta razon usa ::
+      $response = GetModel::getData($table,$select,$orderBy,$orderMode,$startAt,$endAt); // Se ejecutara el metodo "getData", por esta razon usa ::
       $return = new GetController();
       $return->fncResponse($response);     
     }
@@ -24,11 +24,11 @@
     
     
 
-    static public function getDataFilter($table,$select,$linkTo,$equalTo,$orderBy,$orderMode)
+    static public function getDataFilter($table,$select,$linkTo,$equalTo,$orderBy,$orderMode,$startAt,$endAt)
     {
 
       // Se instancia la clase GetModel, para usa el metodo "getData" 
-      $response = GetModel::getDataFilter($table,$select,$linkTo,$equalTo,$orderBy,$orderMode); // Se ejecutara el metodo "getData", por esta razon usa ::
+      $response = GetModel::getDataFilter($table,$select,$linkTo,$equalTo,$orderBy,$orderMode,$startAt,$endAt); // Se ejecutara el metodo "getData", por esta razon usa ::
       //echo "<pre>"; print_r($response); echo"</pre>";
       //return;
 

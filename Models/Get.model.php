@@ -8,12 +8,23 @@
     // Peticiones Get SIN filtro
     // ===============================================    
 
-    static public function getData($table,$select,$orderBy,$orderMode)
+    static public function getData($table,$select,$orderBy,$orderMode,$startAt,$endAt)
     {
       $sql = "SELECT $select FROM $table";
 
-      if ($orderBy != null && $orderMode != null){
+      // Cuando se ordene y NO se limite los registros a mostrar
+      if (($orderBy != null) && ($orderMode != null) && ($startAt == null) && ($endAt == null)){
         $sql = "SELECT $select FROM $table ORDER BY $orderBy $orderMode";
+      }
+
+      // Cuando se ordene y se limite los registros a mostrar
+      if (($orderBy != null) && ($orderMode != null) && ($startAt != null) && ($endAt != null)){
+        $sql = "SELECT $select FROM $table ORDER BY $orderBy $orderMode LIMIT $startAt,$endAt";
+      }
+
+      // Cuando NO se ordene y se limite los registros a mostrar
+      if (($orderBy == null) && ($orderMode == null) && ($startAt != null) && ($endAt != null)){
+        $sql = "SELECT $select FROM $table LIMIT $startAt,$endAt";
       }
 
       // Preparando la conexion
@@ -27,7 +38,7 @@
     // Peticiones Get CON filtro
     // ===============================================    
 
-    static public function getDataFilter($table,$select,$linkTo,$equalTo,$orderBy,$orderMode)
+    static public function getDataFilter($table,$select,$linkTo,$equalTo,$orderBy,$orderMode,$startAt,$endAt)
     {
 
       // En el caso de que se envien varias condiciones en la URL
@@ -54,11 +65,22 @@
       } // foreach ($linkToArray as $key => $value)
       //return;
 
-
+      // Sin Ordenar y limitar Datos.
       $sql = "SELECT $select FROM $table WHERE $linkToArray[0] = :$linkToArray[0] $linkToText";
 
-      if ($orderBy != null && $orderMode != null){
+      // Cuando se ordene y sin limite los registros a mostrar
+      if (($orderBy != null) && ($orderMode != null) && ($startAt == null) && ($endAt == null)){
         $sql = "SELECT $select FROM $table WHERE $linkToArray[0] = :$linkToArray[0] $linkToText ORDER BY $orderBy $orderMode";
+      }
+
+      // Cuando se ordene y se limite los registros a mostrar
+      if (($orderBy != null) && ($orderMode != null) && ($startAt != null) && ($endAt != null)){
+        $sql = "SELECT $select FROM $table WHERE $linkToArray[0] = :$linkToArray[0] $linkToText ORDER BY $orderBy $orderMode LIMIT $startAt,$endAt";
+      }
+
+      // Cuando no se ordena y se limite los registros a mostrar
+      if (($orderBy == null) && ($orderMode == null) && ($startAt != null) && ($endAt != null)){
+        $sql = "SELECT $select FROM $table WHERE $linkToArray[0] = :$linkToArray[0] $linkToText LIMIT $startAt,$endAt";
       }
 
       // Mostrando el contenido de la sentencia "SQL"
