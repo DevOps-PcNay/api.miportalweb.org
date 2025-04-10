@@ -11,3 +11,8 @@ POST https://api.miportalweb.org/t_Users
 
 
 
+### SELECT * FROM t_courses INNER JOIN t_instructors ON t_courses.id_instructor_course = t_instructors.id_instructor
+
+
+###SELECT * FROM t_countries INNER JOIN t_codes ON t_countries.id_code_country = t_codes.id_code INNER JOIN t_dialcodes ON t_countries.id_dialcode_country = t_dialcodes.id_dialcode
+

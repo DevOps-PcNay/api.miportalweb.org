@@ -22,3 +22,28 @@ GET https://api.miportalweb.org/t_courses?select=*&startAt=0&endAt=5
 ### Ordenar Registros y se limitan registros
 # Muestra todos lo registros Ordenados Ascendentemente por id_course
 GET https://api.miportalweb.org/t_courses?select=*&startAt=0&endAt=5&orderBy=id_course&orderMode=DESC
+
+### Relaciones de tablas sin Filtros
+GET https://api.miportalweb.org/relations?rel=t_courses,t_instructors&type=course,instructor
+
+### Relaciones de tablas sin Filtros, ahora seleccionado solo dos campos a mostrar.
+GET https://api.miportalweb.org/relations?select=name_instructor,title_course&rel=t_courses,t_instructors&type=course,instructor
+
+
+### Relaciones de tablas con Filtros, ahora seleccionado solo tres campos a mostrar, ordenando por "id_course" de forma Ascendente, limitando a 5 reg.
+GET https://api.miportalweb.org/relations?select=name_instructor,title_course,id_course&rel=t_courses,t_instructors&type=course,instructor&orderBy=id_course&orderMode=DESC
+
+
+### Relaciones de 3 tablas sin Filtros, ahora seleccionado solo tres campos a mostrar, ordenando por "id_course" de forma Ascendente, con un limite de 5 registros a mostrar.
+GET https://api.miportalweb.org/relations?select=name_country,initial_code,digit_dialcode&rel=t_countries,t_codes,t_dialcodes&type=country,code,dialcode
+
+
+### Relaciones de 3 tablas Con Filtros, ahora seleccionado solo tres campos a mostrar, name_country,initial_code,digit_dialcode, ordenando por "id_course" de forma Ascendente, con un limite de 5 registros a mostrar.
+GET https://api.miportalweb.org/relations?select=name_country,initial_code,digit_dialcode&rel=t_countries,t_codes,t_dialcodes&type=country,code,dialcode&orderBy=id_country&orderMode=DESC&startAt=0&endAt=5
+
+
+### Relaciones de 3 tablas Con Filtros, donde "name_country = Indonesia, seleccionado solo tres campos a mostrar, name_country,initial_code,digit_dialcode, ordenando por "id_course" de forma Ascendente, con un limite de 5 registros a mostrar.
+GET https://api.miportalweb.org/relations?linkTo=name_country&equalTo=China&select=name_country,initial_code,digit_dialcode&rel=t_countries,t_codes,t_dialcodes&type=country,code,dialcode
+
+
+//&orderBy=id_country&orderMode=DESC&startAt=0&endAt=5

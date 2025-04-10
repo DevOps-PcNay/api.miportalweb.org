@@ -37,6 +37,39 @@
     }
 
 
+    // ===================================================================
+    // Peticiones GET sin filtro entre tabla Relacionadas
+    // =================================================================
+
+    static public function getRelData($rel,$type,$select,$orderBy,$orderMode,$startAt,$endAt)
+    {
+      // Se instancia la clase GetModel, para usa el metodo "getData" 
+      $response = GetModel::getRelData($rel,$type,$select,$orderBy,$orderMode,$startAt,$endAt); // Se ejecutara el metodo "getData", por esta razon usa ::
+      
+      //echo "<pre>";print_r($reponse);echo"</pre>";
+      //return
+
+      $return = new GetController();
+      $return->fncResponse($response);     
+    }
+
+// ===================================================================
+    // Peticiones GET CON filtro entre tabla Relacionadas
+    // =================================================================
+
+    static public function getRelDataFilter($rel,$type,$select,$linkTo,$equalTo,$orderBy,$orderMode,$startAt,$endAt)
+    {
+      // Se instancia la clase GetModel, para usa el metodo "getData" 
+      $response = GetModel::getRelDataFilter($rel,$type,$select,$linkTo,$equalTo,$orderBy,$orderMode,$startAt,$endAt); // Se ejecutara el metodo "getData", por esta razon usa ::
+      
+      //echo "<pre>";print_r($reponse);echo"</pre>";
+      //return
+
+      $return = new GetController();
+      $return->fncResponse($response);     
+    }
+
+
     // Respuestas del Controlador
     public function fncResponse($response){
       if (!empty($response))
