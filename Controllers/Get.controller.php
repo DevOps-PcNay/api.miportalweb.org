@@ -53,7 +53,7 @@
       $return->fncResponse($response);     
     }
 
-// ===================================================================
+    // ===================================================================
     // Peticiones GET CON filtro entre tabla Relacionadas
     // =================================================================
 
@@ -79,6 +79,22 @@
       $response = GetModel::getDataSearch($table,$select,$linkTo,$search,$orderBy,$orderMode,$startAt,$endAt); // Se ejecutara el metodo "getData", por esta razon usa ::
       //echo "<pre>"; print_r($response); echo"</pre>";
       //return;
+
+      $return = new GetController();
+      $return->fncResponse($response);     
+    }
+
+    // ===================================================================
+    // Peticiones GET para el buscador entre Tablas Relacionadas.
+    // =================================================================
+
+    static public function getRelDataSearch($rel,$type,$select,$linkTo,$search,$orderBy,$orderMode,$startAt,$endAt)
+    {
+      // Se instancia la clase GetModel, para usa el metodo "getData" 
+      $response = GetModel::getRelDataSearch($rel,$type,$select,$linkTo,$search,$orderBy,$orderMode,$startAt,$endAt); // Se ejecutara el metodo "getData", por esta razon usa ::
+      
+      //echo "<pre>";print_r($reponse);echo"</pre>";
+      //return
 
       $return = new GetController();
       $return->fncResponse($response);     

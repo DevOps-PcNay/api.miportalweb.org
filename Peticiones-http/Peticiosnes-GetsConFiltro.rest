@@ -34,3 +34,10 @@ GET https://api.miportalweb.org/t_courses?select=id_course,title_course,descript
 ### NO se Ordenar los registros, pero limitando los registros.
 # Peticion GET con campos personalizados usando otra base de datos 2, usando la clausula WHERE. Solo se filtra por un solo valor y se muestran tres campos de l tabla, ordenados por "description_course" de forma Descendente
 GET https://api.miportalweb.org/t_courses?select=id_course,title_course,description_course&linkTo=title_course&equalTo=Gussi,ghost&startAt=0&endAt=2
+
+
+### NO se Ordenar los registros, pero buscando registros,entre tablas relacionadas, mostrando todos los registros
+GET https://api.miportalweb.org/relations?rel=t_products,t_categories&type=product,category&select=*&linkTo=name_product,id_category_product&search=Sound_17
+
+### NO se Ordenar los registros, pero buscando registros,entre tablas relacionadas, mostrando los campos seleccionados.
+GET https://api.miportalweb.org/relations?rel=t_products,t_categories&type=product,category&select=name_product,name_category&linkTo=name_product,id_category_product&search=Sound_17
