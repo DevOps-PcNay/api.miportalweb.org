@@ -81,9 +81,16 @@
     //return
     
     $response->getRelDataFilter($_GET["rel"],$_GET["type"],$select,$_GET["linkTo"],$_GET["equalTo"],$orderBy,$orderMode,$startAt,$endAt);
+
+    // ===============================================
+    // Peticiones GET para el buscador sin relaciones
+    // =============================================
+
+  }else if (isset($_GET["linkTo"]) && isset($_GET["search"])) {
+    $response->getDataSearch($table,$select,$_GET["linkTo"],$_GET["search"],$orderBy,$orderMode,$startAt,$endAt);
+
   }
-  else
-  {
+  else{
     // ===============================================
     // Peticiones Get SIN filtro
     // ===============================================

@@ -69,6 +69,21 @@
       $return->fncResponse($response);     
     }
 
+    // ==========================================================================================
+    // Peticiones GET par el buscador SIN relaciones
+    // ==========================================================================================
+    static public function getDataSearch($table,$select,$linkTo,$search,$orderBy,$orderMode,$startAt,$endAt)
+    {
+
+      // Se instancia la clase GetModel, para usa el metodo "getData" 
+      $response = GetModel::getDataSearch($table,$select,$linkTo,$search,$orderBy,$orderMode,$startAt,$endAt); // Se ejecutara el metodo "getData", por esta razon usa ::
+      //echo "<pre>"; print_r($response); echo"</pre>";
+      //return;
+
+      $return = new GetController();
+      $return->fncResponse($response);     
+    }
+
 
     // Respuestas del Controlador
     public function fncResponse($response){

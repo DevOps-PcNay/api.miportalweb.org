@@ -46,4 +46,13 @@ GET https://api.miportalweb.org/relations?select=name_country,initial_code,digit
 GET https://api.miportalweb.org/relations?linkTo=name_country&equalTo=China&select=name_country,initial_code,digit_dialcode&rel=t_countries,t_codes,t_dialcodes&type=country,code,dialcode
 
 
-//&orderBy=id_country&orderMode=DESC&startAt=0&endAt=5
+### Busquedas SIN Filtro.
+GET https://api.miportalweb.org/t_products?select=*&linkTo=name_product&search=cheese
+
+
+### Busquedas CON Filtro.
+GET https://api.miportalweb.org/t_products?select=*&linkTo=name_product,id_category_product&search=Danishes_8
+
+
+
+
