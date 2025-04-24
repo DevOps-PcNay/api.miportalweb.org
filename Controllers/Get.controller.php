@@ -100,6 +100,21 @@
       $return->fncResponse($response);     
     }
 
+   // ===================================================================
+    // Peticiones GET para Rangos
+    // =================================================================
+
+    static public function getDataRange($table,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
+    {
+      // Se instancia la clase GetModel, para usa el metodo "getData" 
+      $response = GetModel::getDataRange($table,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo); // Se ejecutara el metodo "getData", por esta razon usa ::
+      
+      //echo "<pre>";print_r($reponse);echo"</pre>";
+      //return
+
+      $return = new GetController();
+      $return->fncResponse($response);     
+    }    
 
     // Respuestas del Controlador
     public function fncResponse($response){

@@ -54,5 +54,7 @@ GET https://api.miportalweb.org/t_products?select=*&linkTo=name_product&search=c
 GET https://api.miportalweb.org/t_products?select=*&linkTo=name_product,id_category_product&search=Danishes_8
 
 
+### Rangos Con Filtros.
+GET https://api.miportalweb.org/t_products?select=*&linkTo=date_created_product&between1=2024-01-01&between2=2024-10-30&filterTo=id_category_product&inTo=1,2
 
 

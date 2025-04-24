@@ -23,6 +23,13 @@
   // Para limitar los registros a mostrar 
   $startAt = $_GET["startAt"] ?? null;    // Si no viene el valor $_GET["startAt"] le asigna un null
   $endAt = $_GET["endAt"] ?? null;    // Si no viene el valor $_GET["endAt"] le asigna un null
+  // Rangos con Filtros:
+  $filterTo = $_GET["filterTo"] ?? null;
+  $inTo = $_GET["inTo"] ?? null;
+
+
+
+
 
   // Se verificara si viene una variable super global de tipo GET con el parametro "select"
   // Si no se manda esta variable "select", tomara el valor de "*"
@@ -91,6 +98,12 @@
 
   }else if (isset($_GET["rel"]) && isset($_GET["type"]) && ($table == "relations")&& (isset($_GET["linkTo"])) && (isset($_GET["search"])) ) {
     $response->getRelDataSearch($_GET["rel"],$_GET["type"],$select,$_GET["linkTo"],$_GET["search"],$orderBy,$orderMode,$startAt,$endAt);    
+
+  // ===============================================
+  // Peticiones Get Para Seleccionar Rangos    
+  // ===============================================
+  }else if (isset($_GET["linkTo"]) && isset($_GET["between1"]) && (isset($_GET["between2"])) ) {
+    $response->getDataRange($table,$select,$_GET["linkTo"],$_GET["between1"],$_GET["between2"],$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo);    
   }
   else{
     // ===============================================

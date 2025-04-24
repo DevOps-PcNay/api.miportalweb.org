@@ -456,5 +456,44 @@
     }  // static public function getRelData($rel,$type,$select,$orderBy,$orderMode,$startAt,$endAt)
 
 
+    // ===================================================================
+    // Peticiones GET para Rangos
+    // =================================================================
+
+    static public function getDataRange($table,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
+    {
+      $filter = "";
+      if (($filterTo != null) && ($inTo != null))
+      {
+        $filter = 'AND '.$filterTo.' IN ('.$inTo.')';
+      }
+
+      $sql = "SELECT $select FROM $table WHERE $linkTo BETWEEN '$between1' AND '$between2' $filter";
+
+      // Cuando se ordene y NO se limite los registros a mostrar
+      if (($orderBy != null) && ($orderMode != null) && ($startAt == null) && ($endAt == null)){
+        $sql = "SELECT $select FROM $table WHERE $linkTo BETWEEN '$between1' AND '$between2' $filter ORDER BY $orderBy $orderMode";
+      }
+
+      // Cuando se ordene y se limite los registros a mostrar
+      if (($orderBy != null) && ($orderMode != null) && ($startAt != null) && ($endAt != null)){
+        $sql = "SELECT $select FROM $table WHERE $linkTo BETWEEN '$between1' AND '$between2' $filter ORDER BY $orderBy $orderMode LIMIT $startAt,$endAt";
+      }
+
+      // Cuando NO se ordene y se limite los registros a mostrar
+      if (($orderBy == null) && ($orderMode == null) && ($startAt != null) && ($endAt != null)){
+        $sql = "SELECT $select FROM $table WHERE $linkTo BETWEEN '$between1' AND '$between2' $filter LIMIT $startAt,$endAt";
+      }
+
+      // Preparando la conexion
+      $stmt = Connection::connect()->prepare($sql);
+      $stmt->execute();
+      // PDO::FETCH_CLASS = Para que muestre las columnas de la tabla.
+      return $stmt->fetchAll(PDO::FETCH_CLASS);     
+    
+    }
+
+
+
   } // GetModel
 ?>
