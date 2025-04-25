@@ -112,9 +112,7 @@
 
     static public function getRelData($rel,$type,$select,$orderBy,$orderMode,$startAt,$endAt)
     {
-
       // Obteniendo los nombres de las tabla (que se envian en "rel")
-
       $relArray = explode(",",$rel);
       //Indice 0 = contiene la tabla principal
       //echo "<pre>";print_r($relArray);echo"</pre>";
@@ -460,7 +458,7 @@
     // Peticiones GET para Rangos
     // =================================================================
 
-    static public function getDataRange($table,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
+    static public function getDataRange($rel,$type,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
     {
       $filter = "";
       if (($filterTo != null) && ($inTo != null))
@@ -493,7 +491,75 @@
     
     }
 
+    // ===================================================================
+    // Peticiones GET para Seleccion de Rangos entre tablas Relacionada
+    // =================================================================
 
+    static public function getRelDataRange($rel,$type,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
+    {
+
+      $filter = "";
+      if (($filterTo != null) && ($inTo != null))
+      {
+        $filter = 'AND '.$filterTo.' IN ('.$inTo.')';
+      }
+
+      // Obteniendo los nombres de las tabla (que se envian en "rel")
+      $relArray = explode(",",$rel);
+      //Indice 0 = contiene la tabla principal
+      //echo "<pre>";print_r($relArray);echo"</pre>";
+      
+      $typeArray = explode(",",$type);
+      //echo "<pre>";print_r($typeArray);echo"</pre>";
+      
+      //return
+
+      // Generando las relaciones de forma dinamica.
+
+      $innerJoinText = "";
+
+      // Se hara las modificaciones para el caso de que se coloque mas de dos AND
+      if (count($relArray)>1)
+      {
+        foreach ($relArray as $key => $value)
+        {
+          if ($key > 0) // No se toma encuenta el indice 0, porque es a tabla principal
+          {
+            $innerJoinText .= "INNER JOIN ".$value." ON ".$relArray[0].".id_".$typeArray[$key]."_".$typeArray[0]." =".$value.".id_".$typeArray[$key]." ";
+          }
+        } // foreach ($relArray as $key => $value){
+
+
+        $sql = "SELECT $select FROM $relArray[0] $innerJoinText WHERE $linkTo BETWEEN '$between1' AND '$between2' $filter";
+
+        // Cuando se ordene y NO se limite los registros a mostrar
+        if (($orderBy != null) && ($orderMode != null) && ($startAt == null) && ($endAt == null)){
+          $sql = "SELECT $select FROM $relArray[0] $innerJoinText WHERE $linkTo BETWEEN '$between1' AND '$between2' $filter ORDER BY $orderBy $orderMode";
+        }
+
+        // Cuando se ordene y se limite los registros a mostrar
+        if (($orderBy != null) && ($orderMode != null) && ($startAt != null) && ($endAt != null)){
+          $sql = "SELECT $select FROM $relArray[0] $innerJoinText WHERE $linkTo BETWEEN '$between1' AND '$between2' $filter ORDER BY $orderBy $orderMode LIMIT $startAt,$endAt";
+        }
+
+        // Cuando NO se ordene y se limite los registros a mostrar
+        if (($orderBy == null) && ($orderMode == null) && ($startAt != null) && ($endAt != null)){
+          $sql = "SELECT $select FROM $relArray[0] $innerJoinText WHERE $linkTo BETWEEN '$between1' AND '$between2' $filter LIMIT $startAt,$endAt";
+        }
+
+        // Preparando la conexion
+        $stmt = Connection::connect()->prepare($sql);
+        $stmt->execute();
+        // PDO::FETCH_CLASS = Para que muestre las columnas de la tabla.
+        return $stmt->fetchAll(PDO::FETCH_CLASS);         
+      }
+      else 
+      {
+        return null;
+
+      }
+
+    } // static public function getRelDataRange
 
   } // GetModel
 ?>

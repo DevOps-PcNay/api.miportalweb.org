@@ -96,14 +96,22 @@
   }else if (!isset($_GET["rel"]) && !isset($_GET["type"]) && isset($_GET["linkTo"]) && isset($_GET["search"])) {
     $response->getDataSearch($table,$select,$_GET["linkTo"],$_GET["search"],$orderBy,$orderMode,$startAt,$endAt);
 
-  }else if (isset($_GET["rel"]) && isset($_GET["type"]) && ($table == "relations")&& (isset($_GET["linkTo"])) && (isset($_GET["search"])) ) {
+  }else if (isset($_GET["rel"]) && isset($_GET["type"]) && ($table == "relations") && (isset($_GET["linkTo"])) && (isset($_GET["search"])) ) {
     $response->getRelDataSearch($_GET["rel"],$_GET["type"],$select,$_GET["linkTo"],$_GET["search"],$orderBy,$orderMode,$startAt,$endAt);    
 
   // ===============================================
   // Peticiones Get Para Seleccionar Rangos    
   // ===============================================
-  }else if (isset($_GET["linkTo"]) && isset($_GET["between1"]) && (isset($_GET["between2"])) ) {
-    $response->getDataRange($table,$select,$_GET["linkTo"],$_GET["between1"],$_GET["between2"],$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo);    
+  }else if ((!isset($_GET["rel"])) && (!isset($_GET["type"])) && (isset($_GET["linkTo"])) && (isset($_GET["between1"])) && (isset($_GET["between2"])) ) {
+    $response->getDataRange($table,$select,$_GET["linkTo"],$_GET["between1"],$_GET["between2"],$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo);  
+
+    // =====================================================
+    // Peticiones Get Para Seleccionar Rangos Con Relaciones
+    // =====================================================
+
+  }else if (isset($_GET["rel"]) && isset($_GET["type"]) && ($table == "relations") && (isset($_GET["linkTo"])) && (isset($_GET["between1"])) && (isset($_GET["between2"])))
+  {
+    $response->getRelDataRange($_GET["rel"],$_GET["type"],$select,$_GET["linkTo"],$_GET["between1"],$_GET["between2"],$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo);    
   }
   else{
     // ===============================================
