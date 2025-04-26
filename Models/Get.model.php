@@ -10,6 +10,18 @@
 
     static public function getData($table,$select,$orderBy,$orderMode,$startAt,$endAt)
     {
+
+      // Obteniendo nombre de la Tabla:
+      // Connection::getColumnsData($table);
+      //echo'<pre>';print_r(Connection::getColumnsData($table));echo'</pre>';
+      //return      
+
+      // Validando existencia de la tabla
+      if (empty(Connection::getColumnsData($table)))
+      {
+        return null;
+      }
+
       $sql = "SELECT $select FROM $table";
 
       // Cuando se ordene y NO se limite los registros a mostrar
@@ -46,6 +58,12 @@
       //&equalTo="Gussi,ghost_2";
 
       // Se presenta un problema cuando en "$equalTo = "Textos, Texto2, Texto3,Texto 4" venga con comas 
+
+      // Validando existencia de la tabla
+      if (empty(Connection::getColumnsData($table)))
+      {
+        return null;
+      }
 
       $linkToArray = explode(",",$linkTo);
       //echo "<pre>"; print_r($linkToArray); echo "</pre>";
@@ -131,6 +149,12 @@
       {
         foreach ($relArray as $key => $value)
         {
+          // Validando existencia de la tabla
+          if (empty(Connection::getColumnsData($value)))
+          {
+            return null;
+          }
+
           if ($key > 0) // No se toma encuenta el indice 0, porque es a tabla principal
           {
             $innerJoinText .= "INNER JOIN ".$value." ON ".$relArray[0].".id_".$typeArray[$key]."_".$typeArray[0]." =".$value.".id_".$typeArray[$key]." ";
@@ -198,7 +222,14 @@
 
       // Se hara las modificaciones para el caso de que se coloque mas de dos AND
       if (count($linkToArray)>1){
-        foreach ($linkToArray as $key => $value){
+        foreach ($linkToArray as $key => $value)
+        {
+          // Validando existencia de la tabla
+          if (empty(Connection::getColumnsData($value)))
+          {
+            return null;
+          }
+
           if ($key > 0){
             $linkToText .= "AND ".$value." = :".$value." ";
           }
@@ -287,6 +318,12 @@
 
     static public function getDataSearch($table,$select,$linkTo,$search,$orderBy,$orderMode,$startAt,$endAt)
     {
+      // Validando existencia de la tabla
+      if (empty(Connection::getColumnsData($table)))
+      {
+        return null;
+      }
+
       // En el caso de que se envien varias condiciones en la URL
       //&linkTo="title_course,id_instructor_course";
       //&equalTo="Gussi,ghost_2";
@@ -303,7 +340,14 @@
 
       // Se hara las modificaciones para el caso de que se coloque mas de dos AND
       if (count($linkToArray)>1){
-        foreach ($linkToArray as $key => $value){
+        foreach ($linkToArray as $key => $value)
+        {
+          // Validando existencia de la tabla
+          if (empty(Connection::getColumnsData($value)))
+          {
+            return null;
+          }
+
           if ($key > 0){
             $linkToText .= "AND ".$value." = :".$value." ";
           }
@@ -367,7 +411,14 @@
    
          // Se hara las modificaciones para el caso de que se coloque mas de dos AND
          if (count($linkToArray)>1){
-           foreach ($linkToArray as $key => $value){
+           foreach ($linkToArray as $key => $value)
+           {
+              // Validando existencia de la tabla
+              if (empty(Connection::getColumnsData($value)))
+              {
+                return null;
+              }
+
              if ($key > 0){
                $linkToText .= "AND ".$value." = :".$value." ";
              }
@@ -458,8 +509,14 @@
     // Peticiones GET para Rangos
     // =================================================================
 
-    static public function getDataRange($rel,$type,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
+    static public function getDataRange($table,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
     {
+      // Validando existencia de la tabla
+      if (empty(Connection::getColumnsData($table)))
+      {
+        return null;
+      }
+
       $filter = "";
       if (($filterTo != null) && ($inTo != null))
       {
@@ -497,7 +554,6 @@
 
     static public function getRelDataRange($rel,$type,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
     {
-
       $filter = "";
       if (($filterTo != null) && ($inTo != null))
       {
@@ -523,6 +579,12 @@
       {
         foreach ($relArray as $key => $value)
         {
+          // Validando existencia de la tabla
+          if (empty(Connection::getColumnsData($value)))
+          {
+            return null;
+          }
+          
           if ($key > 0) // No se toma encuenta el indice 0, porque es a tabla principal
           {
             $innerJoinText .= "INNER JOIN ".$value." ON ".$relArray[0].".id_".$typeArray[$key]."_".$typeArray[0]." =".$value.".id_".$typeArray[$key]." ";

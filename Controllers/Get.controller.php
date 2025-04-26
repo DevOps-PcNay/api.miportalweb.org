@@ -14,6 +14,10 @@
     {
       // Se instancia la clase GetModel, para usa el metodo "getData" 
       $response = GetModel::getData($table,$select,$orderBy,$orderMode,$startAt,$endAt); // Se ejecutara el metodo "getData", por esta razon usa ::
+
+      //echo'<pre>';print_r($response);echo'</pre>';
+      //return;
+
       $return = new GetController();
       $return->fncResponse($response);     
     }

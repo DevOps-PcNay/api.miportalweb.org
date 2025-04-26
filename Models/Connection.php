@@ -6,9 +6,9 @@
       
     static public function infoDatabase(){
       $infoDB = array(
-        "database" => "bd_BaseDatos2",
-        "user" => "usuario_basedatos2",
-        "pass" => "basedatos2-Mar-05-2025",
+        "database" => "bd_BaseDatos1",
+        "user" => "usuario_basedatos1",
+        "pass" => "basedatos1-Mar-05-2025",
       );
       return $infoDB;
 
@@ -37,6 +37,18 @@
       return $link;
       
     } // static public function connect(){    
-  
+
+    // =================================
+    // Validar Existencia de una Tabla 
+    // =================================
+    static public function getColumnsData($table)
+    {
+      // Obteniendo la base de datos
+      $database = Connection::infoDatabase()["database"];
+      
+      // Obtener las columnas de la Tablas
+      return Connection::connect()->query("SELECT COLUMN_NAME AS item FROM information_schema.columns WHERE table_schema = '$database' AND table_name = '$table'")->fetchAll(PDO::FETCH_OBJ);
+    }
+
   } // class Conecction {
 

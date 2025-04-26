@@ -1,7 +1,9 @@
 ### Primera peticion de la API
+## Base De Datos 1
 GET https://api.miportalweb.org/t_instructors?select=*
 
 ### Otra peticion "Get" de otra Tabla.
+## Base De Datos 1
 GET https://api.miportalweb.org/t_courses
 
 ### Otra peticion "Get" con solo se obtiene una columna de la tabla
@@ -24,6 +26,7 @@ GET https://api.miportalweb.org/t_courses?select=*&startAt=0&endAt=5
 GET https://api.miportalweb.org/t_courses?select=*&startAt=0&endAt=5&orderBy=id_course&orderMode=DESC
 
 ### Relaciones de tablas sin Filtros
+## Base De Datos 1
 GET https://api.miportalweb.org/relations?rel=t_courses,t_instructors&type=course,instructor
 
 ### Relaciones de tablas sin Filtros, ahora seleccionado solo dos campos a mostrar.
@@ -62,8 +65,3 @@ GET https://api.miportalweb.org/t_products?select=*&linkTo=date_created_product&
 GET https://api.miportalweb.org/relations?rel=t_courses,t_instructors&type=course,instructor
 
 
-### Seleccion de Rangos con Tablas Relacionadas, mostrando todos los campos
-GET https://api.miportalweb.org/relations?rel=t_products,t_categories&type=product,category&select=*&linkTo=date_created_product&between1=2024-01-01&between2=2024-12-30&filterTo=id_category_product&inTo=13
-
-### Seleccion de Rangos con Tablas Relacionadas,mostrando tres campos
-GET https://api.miportalweb.org/relations?rel=t_products,t_categories&type=product,category&select=name_product,name_category,date_created_product&linkTo=date_created_product&between1=2024-01-01&between2=2024-12-30&filterTo=id_category_product&inTo=13
