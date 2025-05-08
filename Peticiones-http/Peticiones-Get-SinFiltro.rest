@@ -7,7 +7,7 @@ GET https://api.miportalweb.org/t_instructors?select=*
 GET https://api.miportalweb.org/t_courses
 
 ### Otra peticion "Get" con solo se obtiene una columna de la tabla
-GET https://api.miportalweb.org/t_courses?select=id_course
+GET https://api.miportalweb.org/t_courses?select=id_course,title_course
 
 
 ### Ordenar Registros.

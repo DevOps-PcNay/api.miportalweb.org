@@ -16,8 +16,10 @@
       //echo'<pre>';print_r(Connection::getColumnsData($table));echo'</pre>';
       //return      
 
-      // Validando existencia de la tabla
-      if (empty(Connection::getColumnsData($table)))
+      $selectArray = explode(",",$select);
+
+      // Validando existencia de la tabla y Columnas.
+      if (empty(Connection::getColumnsData($table,$selectArray)))
       {
         return null;
       }
@@ -59,13 +61,26 @@
 
       // Se presenta un problema cuando en "$equalTo = "Textos, Texto2, Texto3,Texto 4" venga con comas 
 
+      $linkToArray = explode(",",$linkTo);
+      $selectArray = explode(",",$select);
+
+      foreach ($linkToArray as $key => $value)
+      {
+        // Para que no genere una matriz, solo agregara un valor.
+        array_push($selectArray,$value);  // Agrega como indices separados      
+      }
+
+      $selectArray = array_unique($selectArray);
+
+      //echo "<pre>"; print_r($selectArray); echo "</pre>";
+      //return;
+
       // Validando existencia de la tabla
-      if (empty(Connection::getColumnsData($table)))
+      if (empty(Connection::getColumnsData($table,$selectArray)))
       {
         return null;
       }
 
-      $linkToArray = explode(",",$linkTo);
       //echo "<pre>"; print_r($linkToArray); echo "</pre>";
 
       $equalToArray = explode("_",$equalTo);

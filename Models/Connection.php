@@ -41,14 +41,42 @@
     // =================================
     // Validar Existencia de una Tabla 
     // =================================
-    static public function getColumnsData($table)
+    static public function getColumnsData($table,$columns)
     {
       // Obteniendo la base de datos
       $database = Connection::infoDatabase()["database"];
       
       // Obtener las columnas de la Tablas
-      return Connection::connect()->query("SELECT COLUMN_NAME AS item FROM information_schema.columns WHERE table_schema = '$database' AND table_name = '$table'")->fetchAll(PDO::FETCH_OBJ);
-    }
+      $validate = Connection::connect()->query("SELECT COLUMN_NAME AS item FROM information_schema.columns WHERE table_schema = '$database' AND table_name = '$table'")->fetchAll(PDO::FETCH_OBJ);
 
-  } // class Conecction {
+      
+      if(empty($validate))
+      {
+        return null;
+      }
+      else
+      {
+        // Ajustes de seleccion de columna globales.
+        if ($columns[0] == "*")
+        {
+          // Eliminando el primer indice del arreglo
+          array_shift($columns);
+
+        }
+        $sum = 0;
+        foreach($validate as $key => $value)
+        {
+          //in_array($value->item,$columns)
+          // echo '<pre>';print_r(in_array($value->item,$columns));echo'</pre>';       }
+          $sum += in_array($value->item,$columns);
+        }
+
+        //echo '<pre>';print_r($sum);echo'</pre>';
+        return $sum == count($columns) ? $validate : null;
+
+      }
+
+    } // static public function getColumnsData($table,$columns)
+
+  } // class Connection {
 
