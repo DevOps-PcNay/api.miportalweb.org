@@ -43,6 +43,10 @@ GET https://api.miportalweb.org/relations?rel=t_products,t_categories&type=produ
 GET https://api.miportalweb.org/relations?rel=t_products,t_categories&type=product,category&select=name_product,name_category&linkTo=name_product,id_category_product&search=Sound_17
 
 
+### NO se Ordenar los registros, pero buscando registros,entre tablas relacionadas (Instructores y Cursos) , mostrando los campos seleccionados.
+GET https://api.miportalweb.org/relations?rel=t_courses,t_instructors&type=course,instructor&select=name_instructor,title_course,id_course&orderBy=id_course&orderMode=ASC&startAt=0&endAt=6
+
+
 ### Filtrando con un solo valor mostrando todos ("*") ----->>>>
 GET https://api.miportalweb.org/t_products?select=*&linkTo=name_product&equalTo=Danishes
 

@@ -76,7 +76,7 @@
       //return;
 
       // Validando existencia de la tabla
-      if (empty(Connection::getColumnsData($table,$selectArray)))
+      if (empty(Connection::getColumnsData($table,$selectArray)))      
       {
         return null;
       }
@@ -146,6 +146,8 @@
     static public function getRelData($rel,$type,$select,$orderBy,$orderMode,$startAt,$endAt)
     {
       // Obteniendo los nombres de las tabla (que se envian en "rel")
+      $selectArray = explode(",",$select);
+
       $relArray = explode(",",$rel);
       //Indice 0 = contiene la tabla principal
       //echo "<pre>";print_r($relArray);echo"</pre>";
@@ -160,13 +162,17 @@
       $innerJoinText = "";
 
       // Se hara las modificaciones para el caso de que se coloque mas de dos AND
+
       if (count($relArray)>1)
       {
         foreach ($relArray as $key => $value)
         {
-          // Validando existencia de la tabla
-          if (empty(Connection::getColumnsData($value)))
+          // Validando existencia de la tabla y columnas 
+          // if (empty(Connection::getColumnsData($value,$selectArray))) 
+          // ["*"] = Para que no muestre error al relacionar las tablas y validacion de Columnas          
+          if (empty(Connection::getColumnsData($value,["*"])))          
           {
+
             return null;
           }
 
@@ -206,7 +212,13 @@
 
         // Preparando la conexion
         $stmt = Connection::connect()->prepare($sql);
-        $stmt->execute();
+        try 
+        {
+          $stmt->execute();
+        }catch (PDOException $Exception) // Para mostrar el error
+        {          
+          return null;
+        }
         // PDO::FETCH_CLASS = Para que muestre las columnas de la tabla.
         return $stmt->fetchAll(PDO::FETCH_CLASS);     
 
@@ -229,22 +241,17 @@
       $linkToArray = explode(",",$linkTo);
       //echo "<pre>"; print_r($linkToArray); echo "</pre>";
 
-      $equalToArray = explode("_",$equalTo);
+      $equalToArray = explode(",",$equalTo);
       //echo "<pre>"; print_r($equalToArray); echo "</pre>";
       //return
       $linkToText = "";
+      $selectArray = explode(",",$equalTo);
 
 
       // Se hara las modificaciones para el caso de que se coloque mas de dos AND
       if (count($linkToArray)>1){
         foreach ($linkToArray as $key => $value)
         {
-          // Validando existencia de la tabla
-          if (empty(Connection::getColumnsData($value)))
-          {
-            return null;
-          }
-
           if ($key > 0){
             $linkToText .= "AND ".$value." = :".$value." ";
           }
@@ -272,6 +279,13 @@
       {
         foreach ($relArray as $key => $value)
         {
+          // Validando existencia de la tabla
+          // if (empty(Connection::getColumnsData($value,$selectArray)))
+          if (empty(Connection::getColumnsData($value,["*"])))
+          {
+            return null;
+          }
+
           if ($key > 0) // No se toma encuenta el indice 0, porque es a tabla principal
           {
             $innerJoinText .= "INNER JOIN ".$value." ON ".$relArray[0].".id_".$typeArray[$key]."_".$typeArray[0]." =".$value.".id_".$typeArray[$key]." ";
@@ -315,7 +329,15 @@
           $stmt -> bindParam(":".$value,$equalToArray[$key], PDO::PARAM_STR); // Genera de forma diamica los "bindParam"
         }
 
-        $stmt->execute();
+        try 
+        {
+          $stmt->execute();
+        }
+        catch (PDOException $Exception) // Para mostrar el error
+        {          
+          return null;
+        }
+
         // PDO::FETCH_CLASS = Para que muestre las columnas de la tabla.
         return $stmt->fetchAll(PDO::FETCH_CLASS);     
 
@@ -333,11 +355,6 @@
 
     static public function getDataSearch($table,$select,$linkTo,$search,$orderBy,$orderMode,$startAt,$endAt)
     {
-      // Validando existencia de la tabla
-      if (empty(Connection::getColumnsData($table)))
-      {
-        return null;
-      }
 
       // En el caso de que se envien varias condiciones en la URL
       //&linkTo="title_course,id_instructor_course";
@@ -347,22 +364,30 @@
 
       $linkToArray = explode(",",$linkTo);
       //echo "<pre>"; print_r($linkToArray); echo "</pre>";
+      $selectArray = explode(",",$select);
 
-      $searchArray = explode("_",$search);
+      //$searchArray = explode("_",$search);
+      $searchArray = explode(",",$search);
+
       //echo "<pre>"; print_r($equalToArray); echo "</pre>";
       $linkToText = "";
+      foreach($linkToArray as $key => $value)
+      {
+        array_push($selectArray,$value);
+      }
+      $selectArray = array_unique($selectArray);
 
+
+      // Validando existencia de la tabla
+      if (empty(Connection::getColumnsData($table,$selectArray)))
+      {
+        return null;
+      }
 
       // Se hara las modificaciones para el caso de que se coloque mas de dos AND
       if (count($linkToArray)>1){
         foreach ($linkToArray as $key => $value)
         {
-          // Validando existencia de la tabla
-          if (empty(Connection::getColumnsData($value)))
-          {
-            return null;
-          }
-
           if ($key > 0){
             $linkToText .= "AND ".$value." = :".$value." ";
           }
@@ -400,7 +425,15 @@
 
       }      
 
-      $stmt->execute();
+      try 
+      {
+        $stmt->execute();
+      }
+      catch (PDOException $Exception) // Para mostrar el error
+      {          
+        return null;
+      }
+
       // PDO::FETCH_CLASS = Para que muestre las columnas de la tabla.
       return $stmt->fetchAll(PDO::FETCH_CLASS);     
 
@@ -419,20 +452,15 @@
          $linkToArray = explode(",",$linkTo);
          //echo "<pre>"; print_r($linkToArray); echo "</pre>";
    
-         $searchArray = explode("_",$search);
+         $searchArray = explode(",",$search);
          //echo "<pre>"; print_r($equalToArray); echo "</pre>";
-         $linkToText = "";
    
-   
+         $linkToText = "";  
+
          // Se hara las modificaciones para el caso de que se coloque mas de dos AND
          if (count($linkToArray)>1){
            foreach ($linkToArray as $key => $value)
-           {
-              // Validando existencia de la tabla
-              if (empty(Connection::getColumnsData($value)))
-              {
-                return null;
-              }
+           {            
 
              if ($key > 0){
                $linkToText .= "AND ".$value." = :".$value." ";
@@ -461,6 +489,12 @@
       {
         foreach ($relArray as $key => $value)
         {
+          // Validando existencia de la tabla
+          if (empty(Connection::getColumnsData($value,["*"])))
+          {
+            return null;
+          }
+
           if ($key > 0) // No se toma encuenta el indice 0, porque es a tabla principal
           {
             $innerJoinText .= "INNER JOIN ".$value." ON ".$relArray[0].".id_".$typeArray[$key]."_".$typeArray[0]." =".$value.".id_".$typeArray[$key]." ";
@@ -507,7 +541,15 @@
         }
       }      
 
-        $stmt->execute();
+        try 
+        {
+          $stmt->execute();
+        }
+        catch (PDOException $Exception) // Para mostrar el error
+        {          
+          return null;
+        }
+
         // PDO::FETCH_CLASS = Para que muestre las columnas de la tabla.
         return $stmt->fetchAll(PDO::FETCH_CLASS);     
 
@@ -526,8 +568,32 @@
 
     static public function getDataRange($table,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
     {
+      $linkToArray = explode(",",$linkTo);
+      if ($filterTo != null)
+      {
+        $filterToArray = explode(",",$filterTo);
+      }
+      else
+      {
+        $filterToArray = array();
+      }
+
+      $selectArray = explode(",",$select);
+
+      foreach ($linkToArray as $key => $value)
+      {
+        array_push($selectArray,$value);
+      }
+
+      foreach ($filterToArray as $key => $value)
+      {
+        array_push($selectArray,$value);        
+      }
+      $electArray = array_unique($selectArray);
+
+
       // Validando existencia de la tabla
-      if (empty(Connection::getColumnsData($table)))
+      if (empty(Connection::getColumnsData($table,$selectArray)))
       {
         return null;
       }
@@ -557,7 +623,16 @@
 
       // Preparando la conexion
       $stmt = Connection::connect()->prepare($sql);
-      $stmt->execute();
+
+      try 
+      {
+        $stmt->execute();
+      }
+      catch (PDOException $Exception) // Para mostrar el error
+      {          
+        return null;
+      }
+
       // PDO::FETCH_CLASS = Para que muestre las columnas de la tabla.
       return $stmt->fetchAll(PDO::FETCH_CLASS);     
     
@@ -569,6 +644,9 @@
 
     static public function getRelDataRange($rel,$type,$select,$linkTo,$between1,$between2,$orderBy,$orderMode,$startAt,$endAt,$filterTo,$inTo)
     {
+      $linkToArray = explode(",",$linkTo);
+      $filterToArray = explode(",",$filterTo);
+      
       $filter = "";
       if (($filterTo != null) && ($inTo != null))
       {
@@ -595,7 +673,7 @@
         foreach ($relArray as $key => $value)
         {
           // Validando existencia de la tabla
-          if (empty(Connection::getColumnsData($value)))
+          if (empty(Connection::getColumnsData($value,["*"])))
           {
             return null;
           }
@@ -626,7 +704,16 @@
 
         // Preparando la conexion
         $stmt = Connection::connect()->prepare($sql);
-        $stmt->execute();
+
+        try 
+        {
+          $stmt->execute();
+        }
+        catch (PDOException $Exception) // Para mostrar el error
+        {          
+          return null;
+        }  
+
         // PDO::FETCH_CLASS = Para que muestre las columnas de la tabla.
         return $stmt->fetchAll(PDO::FETCH_CLASS);         
       }

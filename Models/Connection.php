@@ -6,9 +6,9 @@
       
     static public function infoDatabase(){
       $infoDB = array(
-        "database" => "bd_BaseDatos1",
-        "user" => "usuario_basedatos1",
-        "pass" => "basedatos1-Mar-05-2025",
+        "database" => "bd_BaseDatos3",
+        "user" => "usuario_basedatos3",
+        "pass" => "basedatos3-Mar-05-2025",
       );
       return $infoDB;
 
@@ -49,7 +49,6 @@
       // Obtener las columnas de la Tablas
       $validate = Connection::connect()->query("SELECT COLUMN_NAME AS item FROM information_schema.columns WHERE table_schema = '$database' AND table_name = '$table'")->fetchAll(PDO::FETCH_OBJ);
 
-      
       if(empty($validate))
       {
         return null;
