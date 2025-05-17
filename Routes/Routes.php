@@ -41,29 +41,43 @@
   // ==================================================
 
   // Si se le pasa como parametro un nombre de tabla.
-  if ((count($routesArray)== 1) && (isset($_SERVER['REQUEST_METHOD']))){
-    //echo '<pre>'; print_r($_SERVER['REQUEST_METHOD']); echo '</pre>';
+  if ((count($routesArray)== 1) && (isset($_SERVER['REQUEST_METHOD'])))
+  {
+  //echo '<pre>'; print_r($_SERVER['REQUEST_METHOD']); echo '</pre>';
+
+    // Para el caso de que se envie a la URL parametros para  mostrar en las peticiones GET solo algunas columnas, se tiene que separar y asignarlo en arreglos.
+    //$table = $routesArray[1];
+    // $routesArray[1][0] = Para obtener solamentente el nombre de la tabla.
+    $table = explode("?",$routesArray[1])[0];
+
     if ($_SERVER['REQUEST_METHOD'] == "GET"){
       // Es por medio el cual se relaciona "Rutas" con 
       include "Services/Get.php";             
     }
     
     if ($_SERVER['REQUEST_METHOD'] == "POST"){
-      $joson = array(
+      
+      include "Services/Post.php";
+      /*
+      $json = array(
         'status' => '200',
         'result' => 'Solicitud POST'
       );
       echo json_encode($json,http_response_code($json["status"]));            
+      */
+
     }
-    if ($_SERVER['REQUEST_METHOD'] == "PUT"){
-      $joson = array(
+    if ($_SERVER['REQUEST_METHOD'] == "PUT")
+    {
+      $json = array(
         'status' => '200',
         'result' => 'Solicitud PUT'
       );
       echo json_encode($json,http_response_code($json["status"]));            
     }
-    if ($_SERVER['REQUEST_METHOD'] == "DELETE"){
-      $joson = array(
+    if ($_SERVER['REQUEST_METHOD'] == "DELETE")
+    {
+      $json = array(
         'status' => '200',
         'result' => 'Solicitud POST'
       );

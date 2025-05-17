@@ -9,7 +9,7 @@
   // Para el caso de que se envie a la URL parametros para  mostrar en las peticiones GET solo algunas columnas, se tiene que separar y asignarlo en arreglos.
   //$table = $routesArray[1];
   // $routesArray[1][0] = Para obtener solamentente el nombre de la tabla.
-  $table = explode("?",$routesArray[1])[0];
+  //$table = explode("?",$routesArray[1])[0];
 
   //echo "<pre>";print_r($table); echo "</pre>";
   //return;

@@ -1,0 +1,14 @@
+### Peticiones POST
+# Para que funcione la peticion POST debe quedarse con estos espacios
+//Content-Type: application/json
+POST https://api.miportalweb.org/SDSD
+Content-Type: application/x-www-form-urlencoded
+
+{
+  "title_course": "Aprendiendo PHP desde Cero"  
+  "description_course": "Aprendiendo todas las bases del Lenguaje",
+  "id_instructor_course": "1",
+  "image_course": "https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg",
+  "price_course": "199.99",
+  "date_created_course": "2023-10-10"  
+}
